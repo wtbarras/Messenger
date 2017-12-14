@@ -42,4 +42,5 @@ class Messenger:
     def closeMessageThreads(self):
         while( len(self.messageThreadDict) != 0):
             print("Calling.end on thread")
-            self.messageThreadDict.popitem().end()
+            threadTuple = self.messageThreadDict.popitem()
+            threadTuple[1].end()
