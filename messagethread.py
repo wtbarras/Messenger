@@ -4,9 +4,6 @@ import queue
 
 class MessageThread(Thread):
 
-    def setSocket(self, s):
-        self.socket = s;
-
     # Initialize messageThread with default settings
     # @TODO This needs to be named somethng other than init. That one is taken
     def __init__(self, socketFamily=socket.AF_INET, socketType=socket.SOCK_STREAM):
@@ -33,9 +30,14 @@ class MessageThread(Thread):
         print("closing message thread")
         self.keepRunning = 0
 
+    def closeSocket(self):
+        self.socket.close()
 
     def setMessageQueue(self, queue):
         self.queue = queue
+
+    def setSocket(self, s):
+        self.socket = s;
 
     def getAddress(self):
         # @TODO return actual address from getAddress
