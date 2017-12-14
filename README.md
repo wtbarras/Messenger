@@ -24,7 +24,11 @@ Installing is as simple as cloning or downloading this repository and then run T
 
 ## Running the tests
 
-There are currently no tests, although there will be soon.
+To run tests, cd to the test/ directory and enter
+
+```
+python3.7 testmessagethreadmethods.py
+```
 
 ## Contributing
 
