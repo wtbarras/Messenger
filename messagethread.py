@@ -27,9 +27,9 @@ class MessageThread(Thread):
         self.outputWithId("Thread Started!")
         # Bind the socket to a port.
         # Have to use a port greater than 1024 if this is going to run as a non-sudo user
-        self.socket.bind((socket.gethostname(), 4477))
+        self.message_socket.bind((socket.gethostname(), 4477))
         # Begin listening for incoming connections
-        self.socket.listen()
+        self.message_socket.listen()
         self.outputWithId("Listening on: " + str(self.getAddress()) + " : " + str(self.getPort()))
         self.keepRunning = 1
         # @TODO make this loop as AbstractEventLoop object
@@ -41,19 +41,19 @@ class MessageThread(Thread):
         self.keepRunning = 0
 
     def closeSocket(self):
-        self.socket.close()
+        self.message_socket.close()
 
     def setMessageQueue(self, queue):
         self.queue = queue
 
     def setSocket(self, s):
-        self.socket = s;
+        self.message_socket = s;
 
     def getAddress(self):
-        return self.socket.getsockname()[0]
+        return self.message_socket.getsockname()[0]
 
     def getPort(self):
-        return self.socket.getsockname()[1]
+        return self.message_socket.getsockname()[1]
 
     def outputWithId(self, outputString):
         self.consoleOutputQueue.put(str(self.id) + ">> " + outputString)
