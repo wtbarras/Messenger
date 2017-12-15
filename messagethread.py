@@ -6,9 +6,10 @@ class MessageThread(Thread):
 
     # Initialize messageThread with default settings
     # @TODO This needs to be named somethng other than init. That one is taken
-    def __init__(self, socketFamily=socket.AF_INET, socketType=socket.SOCK_STREAM):
+    def __init__(self, threadId, socketFamily=socket.AF_INET, socketType=socket.SOCK_STREAM):
         # Init superclass
         Thread.__init__(self)
+        self.id = threadId
         # Make socket for server thread to listen on
         s = socket.socket(socketFamily, socketType)
         # Socket for thread to listen on
@@ -18,9 +19,18 @@ class MessageThread(Thread):
     def setConsoleOutputQueue(self, q):
         self.consoleOutputQueue = q
 
+    # Method: run
+    # Parameters: self
+    # Purpose: This method is where the thread begins execution
+      # It will loop while listening on a socket for incoming messages
     def run(self):
-        # print("Thread started!")
-        self.consoleOutputQueue.put("Thread Started!")
+        self.outputWithId("Thread Started!")
+        # Bind the socket to a port.
+        # Have to use a port greater than 1024 if this is going to run as a non-sudo user
+        self.socket.bind((socket.gethostname(), 4477))
+        # Begin listening for incoming connections
+        self.socket.listen()
+        self.outputWithId("Listening on: " + str(self.getAddress()) + " : " + str(self.getPort()))
         self.keepRunning = 1
         # @TODO make this loop as AbstractEventLoop object
         while(self.keepRunning == 1):
@@ -40,6 +50,10 @@ class MessageThread(Thread):
         self.socket = s;
 
     def getAddress(self):
-        # @TODO return actual address from getAddress
-        self.address = 1
-        return self.address
+        return self.socket.getsockname()[0]
+
+    def getPort(self):
+        return self.socket.getsockname()[1]
+
+    def outputWithId(self, outputString):
+        self.consoleOutputQueue.put(str(self.id) + ">> " + outputString)
