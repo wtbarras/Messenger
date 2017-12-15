@@ -27,7 +27,8 @@ class MessageThread(Thread):
         self.outputWithId("Thread Started!")
         # Bind the socket to a port.
         # Have to use a port greater than 1024 if this is going to run as a non-sudo user
-        self.message_socket.bind((socket.gethostname(), 4477))
+        # Add the id to it so if there are multiple threads, they are on different ports
+        self.message_socket.bind((socket.gethostname(), 4477 + self.id))
         # Begin listening for incoming connections
         self.message_socket.listen()
         self.outputWithId("Listening on: " + str(self.getAddress()) + " : " + str(self.getPort()))
