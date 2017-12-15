@@ -12,7 +12,7 @@ class Messenger:
 
     # Create and Initialize messageThread with default parameters
     def generateMessageThread(self):
-        mt = MessageThread()
+        mt = MessageThread(0)
         # Give it a consoleOutputQueue so it can speak
         try:
             mt.setConsoleOutputQueue(self.outputQueue)
