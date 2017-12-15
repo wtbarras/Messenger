@@ -13,7 +13,8 @@ class ConsoleOutputThread(Thread):
                 # Try to print whatever is on top of the queue
                 print(self.consoleOutputQueue.get(True, .001))
                 # Print prompt after every line so users know input can be accepted
-                print("$", end='', flush=True)
+                # commented out because I'm not sure if it looks better to have this
+                # print("$", end='', flush=True)
             except:
                 # We do not care if this is empty.
                 pass
