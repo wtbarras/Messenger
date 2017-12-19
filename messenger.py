@@ -35,7 +35,7 @@ class Messenger:
             self.closeMessageThreads()
         except AttributeError:
             # Can't close threads that aren't there
-            print("Goddamn")
+            print("Error when trying to close message threads: There are no message threads")
             pass
         self.outputQueue.put("message threads open " + str(len(self.messageThreadDict)))
 
