@@ -47,12 +47,12 @@ if(__name__ == '__main__'):
         if(userInput == 's'):
             startNode(messenger, port)
         elif(userInput == 'p'):
-            print("Printing node infomation not yet supported")
+            messenger.print_data()
         elif(userInput == 'q'):
             pass
         else:
             print("Input not recognized")
 
 
-    messenger.saveAndExit()
+    messenger.save_and_exit()
     consoleOutputThread.end()

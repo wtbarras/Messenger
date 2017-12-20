@@ -17,8 +17,12 @@ class Messenger:
         self.output_queue.put("serverthread needs to be implemented before a node can be started")
         pass
 
+    # Output data about message node and associated server and message threads
+    def print_data():
+        pass
+
     # Create and Initialize messageThread with default parameters
-    def generateMessageThread(self):
+    def generate_message_thread(self):
         mt = MessageThread(0)
         # Give it a consoleOutputQueue so it can speak
         try:
@@ -32,21 +36,21 @@ class Messenger:
         self.output_queue.put("message threads open " + str(len(self.messageThreadDict)) )
         mt.start()
 
-    def setConsoleOutputThread(self, consoleOutputQueue):
+    def set_console_output_thread(self, consoleOutputQueue):
         self.output_queue = consoleOutputQueue
 
-    def saveAndExit(self):
+    def save_and_exit(self):
         # Eventually this will do more than just call another function
         self.output_queue.put("message threads to close " + str(len(self.messageThreadDict)))
         try:
-            self.closeMessageThreads()
+            self.close_message_threads()
         except AttributeError:
             # Can't close threads that aren't there
             print("Error when trying to close message threads: There are no message threads")
             pass
         self.output_queue.put("message threads open " + str(len(self.messageThreadDict)))
 
-    def closeMessageThreads(self):
+    def close_message_threads(self):
         while( len(self.messageThreadDict) != 0):
             print("Calling.end on thread")
             threadTuple = self.messageThreadDict.popitem()
