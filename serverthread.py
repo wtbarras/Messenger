@@ -3,7 +3,10 @@ import socket
 
 class ServerThread(Thread):
 
-    __init__(self, port_param, connection_queue_param, console_output_queue_param):
+    def __init__(self, port_param, console_output_queue_param, messenger_param):
+        # Messenger object that this ServerThread is associated with
+        self.messenger = messenger_param
+
         # Queue that holds strings that will be output. Handled by ConsoleOutputThread
         self.console_output_queue = console_output_queue_param
 
@@ -14,10 +17,6 @@ class ServerThread(Thread):
         if(self.port <= 1024):
             self.console_output_queue.put("Error: Port needs to be greater than 1024")
 
-        # Queue to put new connections in. Then the messenger can take those
-        #   and do what it wants with them
-        self.connection_queue = connection_queue_param
-
         # Set up socket that will be used as the connection point for incoming
         #   comminucations.
         # Make socket for server thread to listen on
@@ -27,4 +26,6 @@ class ServerThread(Thread):
 
 
     def run(self):
-        pass
+        # Begin listening for incoming connections
+        self.server_socket.listen()
+        # @TODO Implement blocking listen in ServerThread.run

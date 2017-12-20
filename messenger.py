@@ -1,5 +1,6 @@
 import messengerutils
 from messagethread       import MessageThread
+from serverthread        import ServerThread
 from consoleoutputthread import ConsoleOutputThread
 import socket
 import queue
@@ -13,9 +14,8 @@ class Messenger:
 
     # Generate server thread and begin listening for connections
     def start(self):
-        # @TODO Implement messenger.start() method
-        self.output_queue.put("serverthread needs to be implemented before a node can be started")
-        pass
+        self.server_thread = ServerThread(self.port, self.output_queue, self)
+        self.server_thread.run()
 
     # Output data about message node and associated server and message threads
     def print_data():
