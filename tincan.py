@@ -3,6 +3,8 @@ from messenger import Messenger
 import messengerutils
 from messagethread       import MessageThread
 from consoleoutputthread import ConsoleOutputThread
+
+import sys
 import socket
 import queue
 
@@ -12,12 +14,17 @@ def printMenu():
     print("  p - print node information")
     print("  q - quit")
 
-def startNode():
-    # Create messenger object.
-    messenger = Messenger(consoleOutputQueue)
+def startNode(messenger, port):
+    messenger.start()
     return messenger
 
 if(__name__ == '__main__'):
+    # If a port was specified, use that. If not, default to 4477
+    if(sys.argv[1] == '-p'):
+        port = sys.argv[2]
+    else:
+        port = 4477
+
     # Create consoleOutputQueue to handle all console output
     consoleOutputQueue = queue.Queue()
 
@@ -27,17 +34,18 @@ if(__name__ == '__main__'):
     consoleOutputThread.setConsoleOutputQueue(consoleOutputQueue)
     consoleOutputThread.start()
 
-    printMenu()
-
     # Create messenger object.
-    messenger = Messenger(consoleOutputQueue)
+    messenger = Messenger(consoleOutputQueue, port)
+
+    # Print menu to command line
+    printMenu()
 
     # Control loop
     userInput = ''
     while(userInput != "q"):
         userInput = input('')
         if(userInput == 's'):
-            startNode()
+            startNode(messenger, port)
         elif(userInput == 'p'):
             print("Printing node infomation not yet supported")
         elif(userInput == 'q'):

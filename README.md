@@ -1,7 +1,8 @@
 # TinCan
 
-Tin can is a distributed chat application, and is currently in its early stage.
-It will enable users to conduct fully encrypted communication over a P2P network.
+Tin can is a peer to peer chat application, and is currently in its early stage.
+It will enable users to conduct fully encrypted communication with no trusted
+third party required.
 
 
 ## Getting Started
@@ -12,6 +13,13 @@ Run TinCan using
 python3.7 tincan.py
 ```
 
+options
+
+-p : port to listen to incoming connections on
+
+If nothing is specified for the port option, then the application will default
+to port 4477
+
 ### Prerequisites
 
 The only important prerequisite is Python3.7. The application will not run if you use 2.X.
@@ -20,7 +28,7 @@ The only important prerequisite is Python3.7. The application will not run if yo
 
 ### Installing
 
-Installing is as simple as cloning or downloading this repository and then run TinCan.
+Installing is as simple as cloning or downloading this repository.
 
 ## Running the tests
 

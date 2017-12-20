@@ -6,38 +6,45 @@ import queue
 
 class Messenger:
 
-    def __init__(self, consoleOutputQueue):
-        self.outputQueue = consoleOutputQueue
+    def __init__(self, consoleOutputQueue, server_port):
+        self.output_queue = consoleOutputQueue
+        self.port = server_port
         self.messageThreadDict = dict()
+
+    # Generate server thread and begin listening for connections
+    def start(self):
+        # @TODO Implement messenger.start() method
+        self.output_queue.put("serverthread needs to be implemented before a node can be started")
+        pass
 
     # Create and Initialize messageThread with default parameters
     def generateMessageThread(self):
         mt = MessageThread(0)
         # Give it a consoleOutputQueue so it can speak
         try:
-            mt.setConsoleOutputQueue(self.outputQueue)
+            mt.setConsoleOutputQueue(self.output_queue)
         except NameError:
             # If a consoleOutputQueue hasn't been passed to this messenger,
             #   then we can't add it to the message thread
             # @TODO Make a custom error to raise for this
             pass
         self.messageThreadDict[mt.getAddress()] = mt
-        self.outputQueue.put("message threads open " + str(len(self.messageThreadDict)) )
+        self.output_queue.put("message threads open " + str(len(self.messageThreadDict)) )
         mt.start()
 
     def setConsoleOutputThread(self, consoleOutputQueue):
-        self.outputQueue = consoleOutputQueue
+        self.output_queue = consoleOutputQueue
 
     def saveAndExit(self):
         # Eventually this will do more than just call another function
-        self.outputQueue.put("message threads to close " + str(len(self.messageThreadDict)))
+        self.output_queue.put("message threads to close " + str(len(self.messageThreadDict)))
         try:
             self.closeMessageThreads()
         except AttributeError:
             # Can't close threads that aren't there
             print("Error when trying to close message threads: There are no message threads")
             pass
-        self.outputQueue.put("message threads open " + str(len(self.messageThreadDict)))
+        self.output_queue.put("message threads open " + str(len(self.messageThreadDict)))
 
     def closeMessageThreads(self):
         while( len(self.messageThreadDict) != 0):
