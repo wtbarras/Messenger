@@ -20,7 +20,9 @@ def startNode(messenger, port):
 
 if(__name__ == '__main__'):
     # If a port was specified, use that. If not, default to 4477
-    if(sys.argv[1] == '-p'):
+    if(len(sys.argv) == 1):
+        port = 4477
+    elif(sys.argv[1] == '-p'):
         unparsed_port = sys.argv[2]
         port = int(unparsed_port)
     else:
